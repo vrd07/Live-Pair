@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: live-pair
+    env: docker
+    plan: free
+    region: oregon
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        sync: false # User must provide this in dashboard
