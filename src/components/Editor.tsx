@@ -45,15 +45,18 @@ export const Editor: React.FC<EditorProps> = ({
             });
 
             // Bind Yjs text to Monaco editor
-            bindingRef.current = new MonacoBinding(
+            const binding = new MonacoBinding(
                 yText,
                 monacoRef.current.getModel()!,
                 new Set([monacoRef.current]),
                 awareness
             );
+            bindingRef.current = binding;
 
             // Initialize UndoManager
-            undoManagerRef.current = new Y.UndoManager(yText);
+            undoManagerRef.current = new Y.UndoManager(yText, {
+                trackedOrigins: new Set([binding, null]) // Track changes from binding and local changes
+            });
 
             // Initialize ATA
             const ata = createATA((path, content) => {
