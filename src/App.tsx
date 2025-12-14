@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Editor } from './components/Editor';
+import { AuthPage } from './components/AuthPage';
 import { Preview } from './components/Preview';
 import { Console } from './components/Console';
 import { Chat } from './components/Chat';
@@ -194,59 +195,17 @@ function LivePairApp() {
 
   if (!roomCode) {
     return (
-      <div style={{ height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: '#1e1e1e', color: 'white', gap: '20px' }}>
-        <div style={{ textAlign: 'center' }}>
-          <h1>Welcome to LivePair</h1>
-          <p>Create a room to start collaborating.</p>
-
-          <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginBottom: '20px' }}>
-            {user ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', background: '#333', padding: '5px 15px', borderRadius: '20px' }}>
-                {user.avatarUrl ? <img src={user.avatarUrl} style={{ width: 24, height: 24, borderRadius: '50%' }} /> : <UserIcon size={20} />}
-                <span>{user.username}</span>
-                <button onClick={logout} style={{ background: 'transparent', border: 'none', color: '#aaa', cursor: 'pointer' }}><LogOut size={16} /></button>
-              </div>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
-                <input
-                  type="text"
-                  placeholder="Enter your name (optional)"
-                  value={guestName}
-                  onChange={(e) => setGuestName(e.target.value)}
-                  style={{ padding: '8px', borderRadius: '5px', border: '1px solid #555', background: '#333', color: 'white', width: '200px' }}
-                />
-                <button onClick={login} style={{ display: 'flex', alignItems: 'center', gap: '5px', padding: '8px 16px', background: '#333', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
-                  <LogIn size={16} /> Login with GitHub
-                </button>
-              </div>
-            )}
-          </div>
-
-          <button
-            onClick={createRoom}
-            style={{ padding: '10px 20px', fontSize: '1.2rem', cursor: 'pointer', background: '#646cff', color: 'white', border: 'none', borderRadius: '5px' }}
-          >
-            Create Room
-          </button>
-
-          <div style={{ marginTop: '20px', display: 'flex', gap: '10px', alignItems: 'center', justifyContent: 'center' }}>
-            <input
-              type="text"
-              placeholder="Enter Room Code"
-              value={joinCode}
-              onChange={(e) => setJoinCode(e.target.value)}
-              style={{ padding: '10px', borderRadius: '5px', border: '1px solid #555', background: '#333', color: 'white' }}
-            />
-            <button
-              onClick={() => joinRoom(joinCode)}
-              disabled={!joinCode.trim()}
-              style={{ padding: '10px 20px', cursor: 'pointer', background: '#4caf50', color: 'white', border: 'none', borderRadius: '5px', opacity: !joinCode.trim() ? 0.5 : 1 }}
-            >
-              Join
-            </button>
-          </div>
-        </div>
-      </div>
+      <AuthPage
+        user={user}
+        guestName={guestName}
+        setGuestName={setGuestName}
+        login={login}
+        logout={logout}
+        createRoom={createRoom}
+        joinRoom={joinRoom}
+        joinCode={joinCode}
+        setJoinCode={setJoinCode}
+      />
     );
   }
 
